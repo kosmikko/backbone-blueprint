@@ -7,6 +7,9 @@ var companySchema = {
   title: 'Company',
   type: 'object',
   properties: {
+    id: {
+      type: 'integer'
+    },
     name: { type: 'string' }
   }
 };
@@ -20,6 +23,9 @@ var personSchema = {
   id: '/schemas/person',
   type: 'object',
   properties: {
+    id: {
+      type: 'integer'
+    },
     firstName: {
       type: 'string',
       required: true
@@ -44,11 +50,13 @@ describe('Test Schema', function () {
 
   it('should create relations', function() {
     var employee = new Employee({
-      firstName: 'John', 
+      id: 3340,
+      firstName: 'John',
       surname: 'Foo',
       company_id: 222
     });
     employee.get('employer').get('id').should.equal(222);
+    employee.toJSON().employer.id.should.equal(222);
   });
 
   it('should format templated properties', function() {
