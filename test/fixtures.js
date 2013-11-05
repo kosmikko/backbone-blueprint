@@ -1,5 +1,12 @@
-var Model = require('..').Model;
+var Db = require('backbone-db');
+var BaseModel = require('..').Model;
 var Collection = require('..').Collection;
+
+var TestDb = new Db('test');
+
+var Model = BaseModel.extend({
+  sync: TestDb.sync.bind(TestDb)
+});
 
 var addressSchema = {
   id: '/schemas/address',
@@ -43,6 +50,12 @@ var personSchema = {
   type: 'object',
   properties: {
     id: {
+      type: 'integer'
+    },
+    company_id: {
+      type: 'integer'
+    },
+    spouse_id: {
       type: 'integer'
     },
     firstName: {

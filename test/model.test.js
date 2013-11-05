@@ -17,7 +17,7 @@ describe('Test Schema', function () {
     employee.get('spouse').get('id').should.equal(3300);
     should.not.exist(employee.get('spouse').get('employer'));
     employee.get('addresses').at(0).get('country').should.equal('GB');
-    employee.toJSON().employer.id.should.equal(222);
+    employee.toJSON({recursive: true}).employer.id.should.equal(222);
 
     var employee2 = new Employee({
       id: 3341,
@@ -31,6 +31,50 @@ describe('Test Schema', function () {
     employee2.get('addresses').at(0).should.be.ok;
     employee2.set('spouse_id', 3333);
     employee2.get('spouse').get('id').should.equal(3333);
+  });
+
+  it('should not save relations, unless specified so', function(done) {
+    var id;
+    var employee = new Employee({
+      firstName: 'John',
+      surname: 'Foo',
+      company_id: 222,
+      spouse_id: 3300,
+      addresses: [{street: 'Baker Street', city: 'London', country: 'GB'}]
+    });
+
+    function save(cb) {
+      employee.save(null, {
+        success: function() {
+          id = employee.id;
+          cb()
+        },
+        error: function(err) {
+          cb(err);
+        }
+      });
+    }
+
+    function fetch(cb) {
+      employee = new Employee({id: id});
+      employee.fetch({
+        success: function() {
+          cb();
+        },
+        error: function(err) {
+          cb(err);
+        }
+      });
+    }
+
+    save(function(err) {
+      fetch(function(err) {
+        should.not.exist(employee.get('addresses'));
+        employee.get('spouse').get('id').should.equal(3300);
+        done();
+      });
+    });
+
   });
 
   it('should format templated properties', function() {

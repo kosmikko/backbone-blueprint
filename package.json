@@ -26,7 +26,8 @@
   },
   "devDependencies": {
     "mocha": "~1.13.0",
-    "chai": "~1.8.1"
+    "chai": "~1.8.1",
+    "backbone-db": "~0.1.2"
   },
   "readmeFilename": "Readme.md",
   "bugs": {
