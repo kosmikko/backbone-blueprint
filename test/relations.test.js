@@ -13,6 +13,7 @@ describe('Test relations', function () {
       spouse_id: 3300,
       addresses: [{street: 'Baker Street', city: 'London', country: 'GB'}]
     });
+    employee.get('title').should.equal('mr');
     employee.get('employer').get('id').should.equal(222);
     employee.get('spouse').get('id').should.equal(3300);
     should.not.exist(employee.get('spouse').get('employer'));

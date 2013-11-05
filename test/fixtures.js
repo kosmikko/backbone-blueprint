@@ -66,6 +66,10 @@ var personSchema = {
     surname: {
       type: 'string'
     },
+    title: {
+      type: 'string',
+      default: 'mr'
+    },
     employer: {
       type: 'relation',
       model: Company,
