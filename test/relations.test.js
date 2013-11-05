@@ -2,7 +2,7 @@ var should = require('chai').should();
 var Model = require('..').Model;
 var Employee = require('./fixtures').Employee;
 
-describe('Test Schema', function () {
+describe('Test relations', function () {
 
   it('should create relations', function() {
     var employee = new Employee({
