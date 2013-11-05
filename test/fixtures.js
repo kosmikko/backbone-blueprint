@@ -1,5 +1,6 @@
 var Db = require('backbone-db');
 var BaseModel = require('..').Model;
+var ValidatingModel = require('..').ValidatingModel;
 var Collection = require('..').Collection;
 
 var TestDb = new Db('test');
@@ -83,6 +84,11 @@ var personSchema = {
 };
 
 var Employee = exports.Employee = Model.extend({
+  type: 'person',
+  schema: personSchema
+});
+
+var ValidatingPerson = exports.ValidatingPerson = ValidatingModel.extend({
   type: 'person',
   schema: personSchema
 });
