@@ -9,7 +9,7 @@ var Model = BaseModel.extend({
   sync: TestDb.sync.bind(TestDb)
 });
 
-var addressSchema = {
+var addressSchema = exports.addressSchema = {
   id: '/schemas/address',
   title: 'Address',
   type: 'object',

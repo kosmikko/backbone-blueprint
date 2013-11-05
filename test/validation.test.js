@@ -7,11 +7,13 @@ describe('Test validation', function () {
   it('should not validate with invalid data', function() {
     var employee = new Person({});
     employee.isValid().should.equal(false);
+    employee.set('firstName', 1);
+    employee.isValid().should.equal(false);
   });
 
   it('model should be valid', function() {
     var employee = new Person({firstName: 'Foo'});
     employee.isValid().should.equal(true);
-  })
+  });
 
 });
