@@ -100,8 +100,11 @@ describe('Test Schema', function () {
     });
     should.not.exist(employee2.get('addresses'));
     should.not.exist(employee2.get('employer'));
+    should.not.exist(employee2.get('spouse'));
     employee2.set('addresses', [{street: 'Baker Street', city: 'London', country: 'GB'}]);
     employee2.get('addresses').at(0).should.be.ok;
+    employee2.set('spouse_id', 3333);
+    employee2.get('spouse').get('id').should.equal(3333);
   });
 
   it('should format templated properties', function() {
