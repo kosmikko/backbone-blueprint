@@ -70,6 +70,10 @@ var personSchema = {
       type: 'string',
       default: 'mr'
     },
+    enabled: {
+      type: 'boolean',
+      default: false
+    },
     employer: {
       type: 'relation',
       model: Company,
