@@ -37,6 +37,11 @@ var personSchema = {
       type: 'relation',
       model: Company,
       references: {id: 'company_id'}
+    },
+    spouse: {
+      type: 'relation',
+      '$ref': '#',
+      references: {id: 'spouse_id'}
     }
   }
 };
@@ -53,9 +58,11 @@ describe('Test Schema', function () {
       id: 3340,
       firstName: 'John',
       surname: 'Foo',
-      company_id: 222
+      company_id: 222,
+      spouse_id: 3300
     });
     employee.get('employer').get('id').should.equal(222);
+    employee.get('spouse').get('id').should.equal(3300);
     employee.toJSON().employer.id.should.equal(222);
   });
 
