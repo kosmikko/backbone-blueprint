@@ -93,7 +93,10 @@ var personSchema = {
 
 var Employee = exports.Employee = Model.extend({
   type: 'person',
-  schema: personSchema
+  schema: personSchema,
+  title: function() {
+    return 'engineer';
+  }
 });
 
 var ValidatingPerson = exports.ValidatingPerson = ValidatingModel.extend({

@@ -87,6 +87,17 @@ describe('Test relations', function () {
     test.url().should.equal('/companies/222/employees/11');
   });
 
+  it('should test inheritance', function() {
+    var Manager = Employee.extend({
+      title: function() {
+        return 'manager';
+      }
+    });
+    var employee = new Employee({id: 1, spouse_id: 2});
+    var manager = new Manager({id: 2});
+    employee.get('spouse').title().should.equal('manager');
+  });
+
 });
 
 
