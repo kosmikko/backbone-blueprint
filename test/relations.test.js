@@ -1,9 +1,10 @@
 var should = require('chai').should();
 var Model = require('..').Model;
 var Employee = require('./fixtures').Employee;
+var personSchema = require('./fixtures').personSchema;
+var Schema = require('..').Schema;
 
 describe('Test relations', function () {
-
   it('should create relations', function() {
     var employee = new Employee({
       id: 3340,
@@ -90,12 +91,42 @@ describe('Test relations', function () {
   it('should test inheritance', function() {
     var Manager = Employee.extend({
       title: function() {
-        return 'manager';
+        return 'manager' + this.id;
       }
     });
-    var employee = new Employee({id: 1, spouse_id: 2});
-    var manager = new Manager({id: 2});
-    employee.get('spouse').title().should.equal('manager');
+    var engineerSchema = Schema.extendSchema(personSchema, {
+      properties: {
+        manager: {
+          type: 'relation',
+          model: Manager,
+          references: {id: 'manager_id'}
+        }
+      }
+    });
+    var Engineer = Employee.extend({
+      schema: engineerSchema,
+      title: function() {
+        return 'engineer' + this.id;
+      }
+    });
+    var managerSchema = Schema.extendSchema(personSchema, {
+      properties: {
+        subordinate: {
+          type: 'relation',
+          model: Engineer,
+          references: {id: 'subordinate_id'}
+        }
+      }
+    });
+    Manager.prototype.changeSchema(managerSchema);
+
+    var engineer = new Engineer({id: 1, manager_id: 2});
+    var manager = new Manager({id: 2, subordinate_id: 1});
+    engineer.title().should.equal('engineer1');
+    manager.title().should.equal('manager2');
+    engineer.get('manager').id.should.equal(2);
+    engineer.get('manager').title().should.equal('manager2');
+    manager.get('subordinate').title().should.equal('engineer1');
   });
 
 });

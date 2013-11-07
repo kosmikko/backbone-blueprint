@@ -46,7 +46,7 @@ var Company = Model.extend({
   schema: companySchema,
 });
 
-var personSchema = {
+var personSchema = exports.personSchema = {
   id: '/schemas/person',
   type: 'object',
   properties: {
@@ -93,10 +93,7 @@ var personSchema = {
 
 var Employee = exports.Employee = Model.extend({
   type: 'person',
-  schema: personSchema,
-  title: function() {
-    return 'engineer';
-  }
+  schema: personSchema
 });
 
 var ValidatingPerson = exports.ValidatingPerson = ValidatingModel.extend({
