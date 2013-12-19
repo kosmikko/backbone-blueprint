@@ -129,6 +129,53 @@ describe('Test relations', function () {
     manager.get('subordinate').title().should.equal('engineer1');
   });
 
+  it('should test overriding a relation', function() {
+    var Parent = Employee.extend({
+      type: 'parent',
+      title: function() {
+        return 'parent' + this.id;
+      }
+    });
+
+    var schema = {
+      properties: {
+        creator: {
+          type: 'relation',
+          model: Parent,
+          references: {id: 'relation_id'}
+        }
+      }
+    };
+
+
+    var User = Employee.extend({
+      type: 'user',
+      schema: schema,
+      title: function() {
+        return 'user' + this.id;
+      }
+    });
+
+    var newSchema = Schema.extendSchema(schema, {
+      properties: {
+        creator: {
+          type: 'relation',
+          model: User,
+          references: {id: 'relation_id'}
+        }
+      }
+    });
+
+    var NewUser = User.extend({
+      schema: newSchema
+    });
+
+    var u = new User({relation_id: 1});
+    u.get('creator').title().should.equal('parent1');
+    var n = new NewUser({relation_id: 1});
+    n.get('creator').title().should.equal('user1');
+  });
+
 });
 
 
