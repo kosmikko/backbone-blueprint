@@ -26,7 +26,11 @@ var Address = Model.extend({
 });
 
 var Addresses = exports.Addresses = Collection.extend({
-  model: Address
+  model: Address,
+  initialize: function(models, options) {
+    this.options = options;
+    Addresses.__super__.initialize.apply(this, arguments);
+  }
 });
 
 var companySchema = {

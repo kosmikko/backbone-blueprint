@@ -91,7 +91,8 @@ describe('Test relations', function () {
         addresses : {
           type: 'relation',
           collection: Addresses,
-          default: []
+          default: [],
+          references: {id: 'company_id'}
         }
       }
     };
@@ -99,10 +100,11 @@ describe('Test relations', function () {
       type: 'foo',
       schema: schema
     });
-    var f = new Foo();
+    var f = new Foo({company_id: 'xyz'});
     var addresses = f.get('addresses');
     should.exist(addresses);
     addresses.length.should.equal(0);
+    addresses.options.id.should.equal('xyz');
   });
 
   it('should format templated properties', function() {
