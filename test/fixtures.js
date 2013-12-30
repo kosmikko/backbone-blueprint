@@ -25,7 +25,7 @@ var Address = Model.extend({
   schema: addressSchema
 });
 
-var Addresses = Collection.extend({
+var Addresses = exports.Addresses = Collection.extend({
   model: Address
 });
 

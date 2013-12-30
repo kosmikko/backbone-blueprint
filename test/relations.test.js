@@ -2,6 +2,7 @@ var should = require('chai').should();
 var Model = require('..').Model;
 var Employee = require('./fixtures').Employee;
 var personSchema = require('./fixtures').personSchema;
+var Addresses = require('./fixtures').Addresses;
 var Schema = require('..').Schema;
 
 describe('Test relations', function () {
@@ -77,6 +78,31 @@ describe('Test relations', function () {
       });
     });
 
+  });
+
+  it('should init relation with default value', function() {
+    var schema = exports.personSchema = {
+      id: '/schemas/foo',
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer'
+        },
+        addresses : {
+          type: 'relation',
+          collection: Addresses,
+          default: []
+        }
+      }
+    };
+    var Foo = Employee.extend({
+      type: 'foo',
+      schema: schema
+    });
+    var f = new Foo();
+    var addresses = f.get('addresses');
+    should.exist(addresses);
+    addresses.length.should.equal(0);
   });
 
   it('should format templated properties', function() {
