@@ -1,7 +1,6 @@
 var should = require('chai').should();
 var Model = require('..').Model;
 var Person = require('./fixtures').ValidatingPerson;
-var validator = require('../lib/validation').validator;
 var jsonschema = require('jsonschema');
 
 describe('Test validation', function () {
@@ -19,6 +18,7 @@ describe('Test validation', function () {
   });
 
   it('should add custom validator', function() {
+    var validator = Person.prototype.validator;
     validator.attributes.contains = function validateContains(instance, schema, options, ctx) {
       if(typeof instance !== 'string') return;
       if(typeof schema.contains !== 'string') throw new jsonschema.SchemaError('"contains" expects a string', schema);
