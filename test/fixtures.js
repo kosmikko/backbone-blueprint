@@ -65,7 +65,8 @@ var personSchema = exports.personSchema = {
     },
     firstName: {
       type: 'string',
-      required: true
+      required: true,
+      contains: 'a'
     },
     surname: {
       type: 'string'
