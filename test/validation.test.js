@@ -1,5 +1,6 @@
 var should = require('chai').should();
 var Model = require('..').Model;
+var ValidatingModel = require('..').ValidatingModel;
 var Person = require('./fixtures').ValidatingPerson;
 var jsonschema = require('jsonschema');
 
@@ -28,6 +29,31 @@ describe('Test validation', function () {
     };
     var employee = new Person({firstName: 'Foo'});
     var errors = employee.validate();
+    errors.length.should.equal(1);
+  });
+
+  it('should validate dependency', function() {
+    var schema = {
+      id: '/schemas/foo',
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer'
+        },
+        data: {
+          type: 'string'
+        }
+      },
+      dependencies: {
+        data: ['id']
+      }
+    };
+    var Foo = ValidatingModel.extend({
+      type: 'foo',
+      schema: schema
+    });
+    var f = new Foo({data: 'a'});
+    var errors = f.validate();
     errors.length.should.equal(1);
   });
 });
