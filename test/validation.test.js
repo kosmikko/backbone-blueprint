@@ -3,6 +3,7 @@ var Model = require('..').Model;
 var ValidatingModel = require('..').ValidatingModel;
 var Person = require('./fixtures').ValidatingPerson;
 var jsonschema = require('jsonschema');
+var _ = require('underscore');
 
 describe('Test validation', function () {
 
@@ -23,7 +24,7 @@ describe('Test validation', function () {
     validator.attributes.contains = function validateContains(instance, schema, options, ctx) {
       if(typeof instance !== 'string') return;
       if(typeof schema.contains !== 'string') throw new jsonschema.SchemaError('"contains" expects a string', schema);
-      if(instance.indexOf()<0){
+      if(instance.indexOf(schema.contains) < 0){
         return 'does not contain the string '+ JSON.stringify(schema.contains);
       }
     };
@@ -55,5 +56,20 @@ describe('Test validation', function () {
     var f = new Foo({data: 'a'});
     var errors = f.validate();
     errors.length.should.equal(1);
+  });
+
+  it('should test custom validation', function() {
+    var Foo = Person.extend({
+      customValidation: function(attributes, options) {
+        var err = new Error('must be enabled');
+        err.stack = 'must be enabled';
+        if(!attributes.enabled) return [err];
+      }
+    });
+    var f = new Foo({firstName: 'Faa'});
+    var errors = f.validate();
+    errors.length.should.equal(1);
+    var errMsg = _.pluck(errors, 'stack').join();
+    errMsg.should.equal('must be enabled');
   });
 });
