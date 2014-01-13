@@ -5,7 +5,9 @@ var addressSchema = require('./fixtures').addressSchema;
 
 describe('Test schema', function () {
 
-  it('should set default attributes with a function', function() {
+  it('should set default attributes correctly', function(done) {
+    var now = new Date();
+    var date;
     var testSchema = {
       id: '/schemas/test',
       type: 'object',
@@ -25,8 +27,22 @@ describe('Test schema', function () {
       type: 'test',
       schema: testSchema
     });
-    var t = new TestModel();
-    t.get('date').should.be.an.instanceof(Date);
+
+    function proceed() {
+      var t = new TestModel();
+      date = t.get('date');
+      date.should.be.an.instanceof(Date);
+      date.getTime().should.be.above(now.getTime());
+      setTimeout(testAnother, 10);
+    }
+
+    function testAnother() {
+      var t = new TestModel();
+      t.get('date').should.be.above(date);
+      done();
+    }
+
+    setTimeout(proceed, 10);
   });
 
   it('should extend schema', function() {
