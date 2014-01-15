@@ -82,6 +82,15 @@ describe('Test relations', function () {
     should.exist(json.employer.id);
     should.exist(json.employer.name);
 
+    // test projection for collection
+    projection = {
+      addresses: ['street']
+    };
+    json = employee.toJSON({recursive: true, projection: projection});
+    json.addresses.length.should.equal(1);
+    var address = json.addresses[0];
+    Object.keys(address).length.should.equal(1);
+    should.exist(address.street);
   });
 
   it('should not save relations, unless specified so', function(done) {
@@ -98,7 +107,7 @@ describe('Test relations', function () {
       employee.save(null, {
         success: function() {
           id = employee.id;
-          cb()
+          cb();
         },
         error: function(err) {
           cb(err);
