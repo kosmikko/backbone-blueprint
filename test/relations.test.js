@@ -6,8 +6,10 @@ var Addresses = require('./fixtures').Addresses;
 var Schema = require('..').Schema;
 
 describe('Test relations', function () {
+  var employee;
+
   it('should create relations', function() {
-    var employee = new Employee({
+    employee = new Employee({
       id: 3340,
       firstName: 'John',
       surname: 'Foo',
@@ -34,6 +36,23 @@ describe('Test relations', function () {
     employee2.get('addresses').at(0).should.be.ok;
     employee2.set('spouse_id', 3333);
     employee2.get('spouse').get('id').should.equal(3333);
+  });
+
+  it('should output correct JSON based on projection config', function() {
+    var projection = {
+      spouse: ['id', 'title'],
+      removeFields: ['addresses']
+    };
+    // test without projection set
+    var json = employee.toJSON({recursive: true});
+    should.exist(json.spouse.enabled);
+    should.exist(json.spouse.title);
+    should.exist(json.addresses);
+    // test /w projection
+    json = employee.toJSON({recursive: true, projection: projection});
+    should.exist(json.spouse.title);
+    should.not.exist(json.spouse.enabled);
+    should.not.exist(json.addresses);
   });
 
   it('should not save relations, unless specified so', function(done) {
