@@ -60,6 +60,13 @@ describe('Test relations', function () {
     should.exist(json.employer.id);
     should.exist(json.employer.name);
 
+    // test whitelisting
+    projection = {
+      onlyFields: ['firstName', 'surname', 'spouse']
+    };
+    json = employee.toJSON({recursive: true, projection: projection});
+    Object.keys(json).length.should.equal(3);
+
     // test /w schema projection
     json = employee.toJSON({
       recursive: true,
