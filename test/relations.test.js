@@ -39,6 +39,7 @@ describe('Test relations', function () {
   });
 
   it('should output correct JSON based on projection config', function() {
+    employee.get('employer').set('name', 'Foo corp');
     var projection = {
       spouse: ['id', 'title'],
       removeFields: ['addresses']
@@ -48,11 +49,32 @@ describe('Test relations', function () {
     should.exist(json.spouse.enabled);
     should.exist(json.spouse.title);
     should.exist(json.addresses);
+    should.exist(json.employer.id);
+    should.exist(json.employer.name);
+
     // test /w projection
     json = employee.toJSON({recursive: true, projection: projection});
     should.exist(json.spouse.title);
     should.not.exist(json.spouse.enabled);
     should.not.exist(json.addresses);
+    should.exist(json.employer.id);
+    should.exist(json.employer.name);
+
+    // test /w schema projection
+    json = employee.toJSON({
+      recursive: true,
+      projection: 'mini'
+    });
+    should.not.exist(json.employer.id);
+    should.exist(json.employer.name);
+
+    json = employee.toJSON({
+      recursive: true,
+      projection: 'full'
+    });
+    should.exist(json.employer.id);
+    should.exist(json.employer.name);
+
   });
 
   it('should not save relations, unless specified so', function(done) {

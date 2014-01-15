@@ -93,6 +93,14 @@ var personSchema = exports.personSchema = {
       type: 'relation',
       collection: Addresses
     }
+  },
+  projection: {
+    mini: {
+      employer: ['name']
+    },
+    full: {
+      employer: ['id', 'name']
+    }
   }
 };
 
