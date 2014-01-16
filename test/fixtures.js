@@ -17,6 +17,11 @@ var addressSchema = exports.addressSchema = {
     street: { type: 'string' },
     city: {type: 'string'},
     country: {type: 'string'}
+  },
+  projection: {
+    mini: {
+      onlyFields: ['city']
+    }
   }
 };
 
