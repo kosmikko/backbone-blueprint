@@ -101,7 +101,8 @@ var personSchema = exports.personSchema = {
   },
   projection: {
     mini: {
-      employer: ['name']
+      employer: ['name'],
+      removeFields: ['enabled']
     },
     full: {
       employer: ['id', 'name']

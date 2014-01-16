@@ -92,16 +92,20 @@ describe('Test relations', function () {
     Object.keys(address).length.should.equal(1);
     should.exist(address.street);
 
-    // test projection with collection "preset"
+    // test projection with collection & model "preset"
     projection = {
-      addresses: 'mini'
+      addresses: 'mini',
+      spouse: 'mini'
     };
     json = employee.toJSON({recursive: true, projection: projection});
     json.addresses.length.should.equal(1);
     address = json.addresses[0];
     Object.keys(address).length.should.equal(1);
     should.exist(address.city);
-
+    should.exist(json.spouse);
+    var spouse = json.spouse;
+    should.exist(spouse.id);
+    should.not.exist(spouse.enabled);
   });
 
   it('should not save relations, unless specified so', function(done) {
