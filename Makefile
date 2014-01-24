@@ -1,5 +1,7 @@
 REPORTER = spec
 BIN = node_modules/.bin/
+SRC_FILES = $(shell find .  -type f \( -name "*.js" ! \
+	-path "*node_modules*" ! -path "*lcov-report*" \))
 
 # Use grep to run only tests with keywords:
 # make test GREP=events
@@ -28,3 +30,6 @@ test-d:
 		--debug-brk \
 		$(GREP_CMND)
 .PHONY: test-d
+
+jshint:
+	@$(BIN)/jshint $(SRC_FILES)

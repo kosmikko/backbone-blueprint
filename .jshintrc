@@ -26,7 +26,7 @@
   "eqeqeq"        : true,   // Require triple equals i.e. `===`.
   "eqnull"        : false,  // Tolerate use of `== null`.
   "evil"          : false,  // Tolerate use of `eval`.
-  "expr"          : false,  // Tolerate `ExpressionStatement` as Programs.
+  "expr"          : true,   // Tolerate `ExpressionStatement` as Programs.
   "forin"         : false,  // Tolerate `for in` loops without `hasOwnPrototype`.
   "immed"         : true,   // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
   "latedef"       : true,   // Prohibit variable use before definition.
@@ -53,19 +53,12 @@
 
   // Extra globals
   "predef"     : [
-    "_",
-    "define",
-    "require",
     "describe",
     "it",
     "before",
     "after",
     "beforeEach",
-    "afterEach",
-    "expect",
-    "casper",
-    "google",
-    "sinon"
+    "afterEach"
   ]
 }
 
