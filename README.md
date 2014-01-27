@@ -82,7 +82,7 @@ Initing a relation might need information from the main model. This is done by p
     }
   }
 ```
-will read the value of _owner_id_ property from the main model, and init relation automatically with it. So e.g. if a Model has {owner_id: 2}, owner relation will be inited with:
+will read the value of `` owner_id `` property from the main model, and init relation automatically with it. So e.g. if a Model has ``{owner_id: 2}``, owner relation will be inited with:
 
 ```javascript
 person = new Person({id: 2})
@@ -119,7 +119,7 @@ If you want to make more complex validations, that jsonschema does not support, 
 
 ## Projection
 
-Passing option {recursive: true} to toJSON, will also include relation in the JSON output. Sometimes it's useful to control which attributes are included in the JSON. This can be done with projection settings. E.g.
+Passing option ``{recursive: true}`` to toJSON, will also include relation in the JSON output. Sometimes it's useful to control which attributes are included in the JSON. This can be done with projection settings. E.g.
 
 ```javascript
 var projection = {
