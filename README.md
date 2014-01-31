@@ -158,6 +158,22 @@ Then you can give projection options as
 
 	person.toJSON({recursive: true, projection: 'mini'})
 
+## Schema options
+
+### convert
+
+A property can define ``convert`` function which is called when attribute is set. E.g.:
+
+```javascript
+    properties: {
+      id: {
+        type: 'integer',
+        convert: function(attribute) {
+          return Number(attribute);
+        }
+      }, ...
+```
+
 ## Info
 This project is based on https://github.com/redpie/backbone-schema
 
