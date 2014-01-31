@@ -9,15 +9,18 @@ describe('Test schema', function () {
     type: 'object',
     properties: {
       id: {
-        type: 'integer',
-        convert: function(attribute) {
-          return Number(attribute);
-        }
+        type: 'integer'
       },
       date: {
         type: 'date',
         default: function() {
           return new Date();
+        }
+      },
+      foo: {
+        type: 'string',
+        convert: function(attribute) {
+          return 'foo-' + attribute;
         }
       }
     }
@@ -50,8 +53,9 @@ describe('Test schema', function () {
   });
 
   it('should convert attribute', function() {
-    var model = new TestModel({id: '123'});
+    var model = new TestModel({id: '123', foo: 'bar'});
     (typeof model.get('id')).should.equal('number');
+    model.get('foo').should.equal('foo-bar');
   });
 
   it('should extend schema', function() {
