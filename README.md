@@ -1,3 +1,7 @@
+# Project moved!
+
+moved to [https://github.com/Everyplay/backbone-blueprint](https://github.com/Everyplay/backbone-blueprint)
+
 # Backbone-blueprint [![TravisCI][travis-img-url]][travis-ci-url]
 
 [travis-img-url]: https://travis-ci.org/mikkolehtinen/backbone-blueprint.png?branch=master
